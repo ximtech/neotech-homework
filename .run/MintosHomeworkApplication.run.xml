@@ -1,0 +1,14 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="NeoTechHomeworkApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="neotech-homework.main" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="neotech.homework.NeoTechHomeworkApplication" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <option name="SHORTEN_COMMAND_LINE" value="NONE" />
+    <envs>
+      <env name="PROFILE" value="dev" />
+    </envs>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

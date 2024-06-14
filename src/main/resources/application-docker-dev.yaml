@@ -1,0 +1,15 @@
+server:
+  error:
+    include-stacktrace: always
+
+spring:
+  docker:
+    compose:
+      enabled: false
+  datasource:
+    url: jdbc:postgresql://host.docker.internal:5432/neotech_db
+    username: postgres
+    password: postgres
+
+logging:
+  config: classpath:logging/log4j-dev.yaml

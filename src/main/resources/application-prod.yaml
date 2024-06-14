@@ -1,0 +1,11 @@
+spring:
+  docker:
+    compose:
+      enabled: false
+  datasource:
+    url: ${NEOTECH_DB_URL}
+    username: ${NEOTECH_DB_USERNAME}
+    password: ${NEOTECH_DB_PASSWORD}
+
+logging:
+  config: classpath:logging/log4j-prod.yaml
