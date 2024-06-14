@@ -4,14 +4,15 @@ info:
     version: 1.0
     description: API Documentation
     active-profile: ${spring.profiles.active}
-    dev-description: Spring Boot application that allows detect phone number country dial-in code
+    dev-description: Spring Boot application that allows detect phone numbers country dial-in codes
     dev-link: https://github.com/ximtech/neotech-homework
 
 server:
-  port: 8094
+  port: 8088
   error:
     whitelabel:
       enabled: false
+    path: /error
 
 spring:
   application:
@@ -21,6 +22,12 @@ spring:
   main:
     web-application-type: reactive
     allow-bean-definition-overriding: false
+    
+  thymeleaf:
+    enabled: true
+    check-template: true
+    prefix: classpath:/templates/
+    suffix: .html
 
   datasource:
     hikari:
@@ -45,7 +52,7 @@ management:
     enabled-by-default: false
     web:
       exposure:
-        include: info, health, caches
+        include: info, health, caches, mappings
     jmx:
       exposure:
         exclude: "*"

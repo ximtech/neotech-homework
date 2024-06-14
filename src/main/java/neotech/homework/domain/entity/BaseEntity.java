@@ -25,18 +25,11 @@ public class BaseEntity {
 
     @Id
     @GeneratedValue
-    UUID id;
+    Long id;
 
     @Version
     @ColumnDefault("0")
     Long version;
-
-    @CreatedBy
-    @Column(nullable = false, updatable = false)
-    String createdByUser;
-
-    @LastModifiedBy
-    String updatedByUser;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
