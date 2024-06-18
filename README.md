@@ -2,7 +2,7 @@
 
 [![build](https://github.com/ximtech/neotech-homework/actions/workflows/build.yml/badge.svg)](https://github.com/ximtech/neotech-homework/actions/workflows/build.yml)
 [![codecov](https://codecov.io/gh/ximtech/neotech-homework/graph/badge.svg?token=ODTJcTrfNp)](https://codecov.io/gh/ximtech/neotech-homework)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/b1f3cef3229c49e3acdf66836ba8b7bb)](https://app.codacy.com/gh/ximtech/neotech-homework/dashboard)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/3deb7826b032497690bf374058b13bd3)](https://app.codacy.com/gh/ximtech/neotech-homework/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 ### Prerequisites
 

@@ -1,6 +1,8 @@
 package neotech.homework
 
+import neotech.homework.exception.ApiException
 import neotech.homework.service.PhoneNumberCountryService
+import neotech.homework.utils.PhoneNumberUtils
 import org.springframework.beans.factory.annotation.Autowired
 
 class PhoneNumberCountryServiceSpec extends DatabaseSpecTemplate {
@@ -161,5 +163,25 @@ class PhoneNumberCountryServiceSpec extends DatabaseSpecTemplate {
 
     }
 
+    def 'test getPhoneNumberCountryData() - should throw error for invalid phone number'() {
+        when:
+        phoneNumberCountryService.getPhoneNumberCountryData(invalidPhoneNumber)
 
+        then:
+        def error = thrown(ApiException)
+        error.message == expectedMessage
+
+        where:
+        invalidPhoneNumber                                               | expectedMessage
+        null                                                             | 'The phone number supplied was empty'
+        ''                                                               | 'The phone number supplied was empty'
+        '      '                                                         | 'The phone number supplied was empty'
+        '+1' + '8'.repeat(PhoneNumberUtils.MAX_INPUT_STRING_LENGTH + 1)  | 'The phone number string supplied was too long to parse'
+        '12423222931'                                                    | "${invalidPhoneNumber} phone should begin with '+' sign"
+        '46 12 250 27 68'                                                | "${invalidPhoneNumber} phone should begin with '+' sign"
+        '+1242a222931'                                                   | "Invalid phone number format: ${invalidPhoneNumber}. Legal phone should look like +371 1123, +1 (555) 111 4555, +15555"
+        '+1242!222931'                                                   | "Invalid phone number format: ${invalidPhoneNumber}. Legal phone should look like +371 1123, +1 (555) 111 4555, +15555"
+        '+12 [424] 222931'                                               | "Invalid phone number format: ${invalidPhoneNumber}. Legal phone should look like +371 1123, +1 (555) 111 4555, +15555"
+        '+' + '1'.repeat(PhoneNumberUtils.LEGAL_PHONE_NUMBER_LENGTH - 1) | "Invalid phone number length. Legal number must have not less than ${PhoneNumberUtils.LEGAL_PHONE_NUMBER_LENGTH} digits"
+    }
 }

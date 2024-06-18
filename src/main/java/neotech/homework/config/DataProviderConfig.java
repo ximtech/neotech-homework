@@ -21,22 +21,12 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class DataProviderConfig {
     
-    final Environment environment;
-    
     @Value("${wiki.phone.country.source.url}")
     String wikiPhoneCountrySourceUrl;
     
     @Bean
     public Document getJsoupDocument() throws IOException {
-        //if (isTestProfileEnabled()) {
-        //    File input = new File("classpath:test_data.html");
-        //    return Jsoup.parse(input, "UTF-8", "test_data.html");
-        //}
         return Jsoup.connect(wikiPhoneCountrySourceUrl).get();
-    }
-    
-    private boolean isTestProfileEnabled() {
-        return Arrays.stream(environment.getActiveProfiles()).anyMatch(env -> env.contains("test"));
     }
 
 }
