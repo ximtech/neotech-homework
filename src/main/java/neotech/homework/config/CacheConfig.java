@@ -14,11 +14,11 @@ public class CacheConfig {
 
     public static final int INITIAL_CACHE_CAPACITY = 100;
     public static final int MAXIMUM_CACHE_SIZE = 500;
-    public static final Duration ENTRY_EXPIRATION_SECONDS = Duration.ofSeconds(5);
+    public static final Duration ENTRY_EXPIRATION_SECONDS = Duration.ofSeconds(10);
 
     @Bean
     public CacheManager cacheManager() {
-        CaffeineCacheManager caffeineCacheManager = new CaffeineCacheManager("currencyExchangeRateCache");
+        CaffeineCacheManager caffeineCacheManager = new CaffeineCacheManager("phoneNumberCountryCache");
         Caffeine<Object, Object> caffeine = Caffeine.newBuilder()
                 .initialCapacity(INITIAL_CACHE_CAPACITY)
                 .maximumSize(MAXIMUM_CACHE_SIZE)

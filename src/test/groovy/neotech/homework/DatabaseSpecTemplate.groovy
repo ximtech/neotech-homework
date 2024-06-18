@@ -1,6 +1,7 @@
 package neotech.homework
 
 import groovy.util.logging.Slf4j
+import neotech.homework.config.ITTestConfig
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.ApplicationContextInitializer
 import org.springframework.context.ConfigurableApplicationContext
@@ -14,7 +15,7 @@ import spock.lang.Specification
 
 @Slf4j
 @Testcontainers
-@SpringBootTest
+@SpringBootTest(classes = ITTestConfig)
 @ActiveProfiles(["it-test"])
 @ContextConfiguration(initializers = DataSourceInitializer)
 class DatabaseSpecTemplate extends Specification {

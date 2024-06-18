@@ -29,16 +29,12 @@
             transform: translate(-50%, -50%);
         }
 
-        .input-style {
-            border-radius: 25px;
+        .input-span {
             border: solid 1px white;
             background: transparent;
-            width: 300px;
-            padding: 10px 20px;
         }
 
         .button-style {
-            border-radius: 25px;
             border: solid 1px white;
             background: transparent;
             top: 20px;
@@ -73,7 +69,7 @@
         .secondLine {
             font-weight: 350;
             font-size: 15px;
-            margin-bottom: 15%;
+            margin-bottom: 5%;
             color: white;
         }
 
@@ -95,20 +91,35 @@
 <div class="bg text-center">
 
     <div class="centered">
-
         <p class="firstLine"> NEOTECH HOMEWORK </p>
         <p class="secondLine">Please enter phone number to get country</p>
 
-        <div class="input-group">
-            <label>
-                <input class="input-style" placeholder="Phone number" type="text">
-            </label>
-        </div>
+        <form id="phoneNumberForm" class="row g-3 needs-validation d-flex justify-content-center" novalidate>
 
-        <div class="d-grid gap-2 col-6 mx-auto mt-2">
-            <button class="btn btn-success button-style" type="button">Enter</button>
-        </div>
+            <div class="row-cols-auto">
+                <div class="input-group has-validation d-flex justify-content-center">
+                    <span class="input-group-text input-span"><i class="bi bi-telephone-plus"></i></span>
+                    <input id="phoneNumberInput" 
+                           type="text" 
+                           class="form-control" style="max-width: 300px"
+                           oninput="checkMeterNameInput(this)"
+                           placeholder="Phone number"
+                           aria-label="Phone number"
+                           aria-describedby="basic-addon" 
+                           required>
+                    <div class="invalid-feedback"></div>
+                </div>
+            </div>
 
+            <div class="row-cols-auto mx-auto">
+                <button id="submitButtonId" class="btn btn-success button-style" type="submit">Submit</button>
+            </div>
+        </form>
+        
+        <div class="row-cols-auto my-5">
+            <p id="phoneNumberCountryId" class="secondLine fw-bold"></p>
+        </div>
+        
     </div>
 
     <div class="social-btn">
@@ -117,9 +128,105 @@
     </div>
 </div>
 
+<footer>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="errorToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <div class="rounded me-2 d-flex justify-content-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-ban" viewBox="0 0 16 16">
+                        <path d="M15 8a6.973 6.973 0 0 0-1.71-4.584l-9.874 9.875A7 7 0 0 0 15 8ZM2.71 12.584l9.874-9.875a7 7 0 0 0-9.874 9.874ZM16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0Z"/>
+                    </svg>
+                </div>
+                <strong id="toastHeaderId" class="me-auto"></strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body"></div>
+        </div>
+    </div>
+</footer>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" 
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
+        crossorigin="anonymous"></script>
+
+<script>
+    "use strict";
+
+    const PHONE_NUMBER_MIN_LENGTH = 11;
+    const PHONE_NUMBER_MAX_LENGTH = 32;
+    const PHONE_NUMBER_DIGITS_ONLY_PATTERN = new RegExp('^\\d+$');
+
+    (() => {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+    
+    function checkMeterNameInput(input) {
+        let errorMessage = "";
+        
+        if (!PHONE_NUMBER_DIGITS_ONLY_PATTERN.test(input.value)) {
+            errorMessage = "Phone number should contain only digits";
+            input.setCustomValidity(errorMessage);
+            $(".invalid-feedback").text(errorMessage);
+            
+        } else if (input.value.length < PHONE_NUMBER_MIN_LENGTH) {
+            errorMessage = "Phone number should be at least " + PHONE_NUMBER_MIN_LENGTH + " digits";
+            input.setCustomValidity(errorMessage);
+            $(".invalid-feedback").text(errorMessage);
+
+        } else if (input.value.length > PHONE_NUMBER_MAX_LENGTH) {
+            errorMessage = "Phone number should not contain more than " + PHONE_NUMBER_MAX_LENGTH + " digits";
+            input.setCustomValidity(errorMessage);
+            $(".invalid-feedback").text(errorMessage);
+
+        } else {
+            // input is fine -- reset the error message
+            input.setCustomValidity(errorMessage);
+        }
+    }
+
+    $("#phoneNumberForm").on("submit", function (e) {
+        e.preventDefault();
+        
+        if (e.target.checkValidity()) {
+            const phoneNumber = $('#phoneNumberInput').val().replace(/\D/g,'');
+
+            $.get('/api/phone/number/country/' + '+' + phoneNumber, function (data) {
+                let output = data.country_names.join(', ');
+                $('#phoneNumberCountryId').text(output);
+
+            }).fail(function (data) {
+                $('#phoneNumberCountryId').text('');
+                showMessageToast(data.responseJSON.error);
+            });
+        }
+    });
+
+    function showMessageToast(message, header = 'Error') {
+        const errorToast = $('#errorToast');
+        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(errorToast);
+        $('#toastHeaderId').text(header);
+        $('.toast-body').text(message);
+        toastBootstrap.show();
+    }
+    
+</script>
 
 </body>
 </html>

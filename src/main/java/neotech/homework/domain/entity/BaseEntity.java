@@ -2,6 +2,7 @@ package neotech.homework.domain.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Version;
@@ -24,7 +25,7 @@ public class BaseEntity {
     public static final String DEFAULT_SCHEMA = "neotech";  
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @Version

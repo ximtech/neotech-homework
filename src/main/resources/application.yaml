@@ -38,6 +38,7 @@ spring:
   flyway:
     enabled: true
     locations: classpath:/db/migration
+    default-schema: neotech
 
   jpa:
     hibernate:
@@ -67,7 +68,7 @@ management:
 resilience4j:
   circuitbreaker:
     instances:
-      currency-api-service:
+      phone-api-service:
         failureRateThreshold: 50
         waitDurationInOpenState: 5s
         permittedNumberOfCallsInHalfOpenState: 3
@@ -78,15 +79,17 @@ resilience4j:
         registerHealthIndicator: true
   retry:
     instances:
-      currency-api-service:
+      phone-api-service:
         maxAttempts: 3
         waitDuration: 1s
   timelimiter:
     instances:
-      currency-api-service:
+      phone-api-service:
         timeoutDuration: 5s
         cancelRunningFuture: false
         
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
+    
+wiki.phone.country.source.url: "https://en.wikipedia.org/wiki/List_of_country_calling_codes#Alphabetical_order"

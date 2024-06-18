@@ -7,3 +7,5 @@ spring:
   groovy:
     template:
       check-template-location: false
+
+wiki.phone.country.source.url: "/test_data.html"
