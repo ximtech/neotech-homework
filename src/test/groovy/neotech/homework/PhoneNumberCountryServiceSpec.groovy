@@ -159,7 +159,7 @@ class PhoneNumberCountryServiceSpec extends DatabaseSpecTemplate {
         '+46 92 661 05 89'   | ['Sweden']
         '+46 03 179 61 78'   | ['Sweden']
         '+46 12 250 27 68'   | ['Sweden']
-
+        // TODO: Implement all test cases
 
     }
 

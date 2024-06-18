@@ -10,3 +10,18 @@ services:
     ports:
       - '5432:5432'
     container_name: 'neotech-homework-db'
+
+  neotech-phone-number-service:
+    depends_on:
+      - neotech-homework-db
+    image: 'ximtech/neotech-homework:latest'
+    container_name: 'neotech-phone-number-service'
+    expose:
+      - 8088
+    ports:
+      - '8088:8088'
+    environment:
+      - 'PROFILE=prod'
+      - 'NEOTECH_DB_URL=jdbc:postgresql://neotech-homework-db/neotech_db'
+      - 'NEOTECH_DB_USERNAME=postgres'
+      - 'NEOTECH_DB_PASSWORD=postgres'
