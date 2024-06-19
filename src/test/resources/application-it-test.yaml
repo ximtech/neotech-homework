@@ -8,4 +8,4 @@ spring:
     template:
       check-template-location: false
 
-wiki.phone.country.source.url: "/test_data.html"
+wiki.phone.country.source.file: "test_data.html"
