@@ -81,7 +81,7 @@ The easiest way to run application is using `docker-compose.yaml` that is locate
   ![<img width="200" height="200"/>](assets/local-run.png)
 - Run application. Running in `dev` profile, database will be automatically set up from `compose.yaml` file
 
-- Connect to local database using credential from `compose.yaml` file. Example:<br/>
+- (Optional) Connect to local database using credential from `compose.yaml` file. Example:<br/>
   ![<img width="200" height="200"/>](assets/db-connection.png)
 
 ### Swagger
