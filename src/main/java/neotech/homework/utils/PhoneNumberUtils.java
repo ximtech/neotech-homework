@@ -13,6 +13,7 @@ public class PhoneNumberUtils {
     // input from overflowing the regular-expression engine.
     public static final int MAX_INPUT_STRING_LENGTH = 250;
     public static final Pattern PLUS_CHAR_PATTERN = Pattern.compile("^\\+.+");
+    // TODO: Support also such phones: +32 31 16 30 61 80
     public static final Pattern VALID_PHONE_NUMBER_PATTERN = Pattern.compile("^\\+\\d{1,4}?[-.\\s]?\\(?\\d{1,3}?\\)?[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}$");
     // Valid phone numbers can have different length, but for simplicity suppose that only standardized length is legal 
     public static final int LEGAL_PHONE_NUMBER_LENGTH = 10;
